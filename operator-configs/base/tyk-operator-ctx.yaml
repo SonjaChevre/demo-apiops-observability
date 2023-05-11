@@ -1,0 +1,7 @@
+apiVersion: tyk.tyk.io/v1alpha1
+kind: OperatorContext
+metadata:
+  name: tyk-operator-ctx
+spec:
+  secretRef:
+    name: tyk-operator-conf
