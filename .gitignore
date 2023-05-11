@@ -3,6 +3,5 @@ gateway-configs/.env.*
 gateway-configs/.tyk-dp.env.*
 gateway-configs/tyk-charts/
 httpbin/dump/**
-httpbin/values-*.yaml
 operator-configs/overlays/*
 !operator-configs/overlays/example
