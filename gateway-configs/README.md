@@ -1,31 +1,26 @@
-# Install and Configure Tyk Gateway to serve requests
+# Install and Configure Tyk Gateway OSS
 
-This is simple instruction to install hybrid gateway that connects to a Tyk Cloud control plane.
+This is simple instruction to install Tyk Gateway (OSS deployment).
 
-1. Create namespace
 ```
-export TYK_ENV=dev
-kubectl create ns tyk-$TYK_ENV
+NAMESPACE=tyk-oss
+APISecret=BananaSplit42
+
+helm upgrade tyk-redis oci://registry-1.docker.io/bitnamicharts/redis -n $NAMESPACE --create-namespace --install --set image.tag=6.2.13
+
+helm upgrade tyk-oss tyk-helm/tyk-oss -n $NAMESPACE --create-namespace \
+  --install \
+  --set global.secrets.APISecret="$APISecret" \
+  --set global.redis.addrs="{tyk-redis-master.$NAMESPACE.svc:6379}" \
+  --set global.redis.passSecret.name=tyk-redis \
+  --set global.redis.passSecret.keyName=redis-password
+  ```
+
+
+To quickly test everything is ok, you can port-forward Tyk Gateway pod:
+```
+kubectl port-forward --namespace tyk-oss service/gateway-svc-tyk-oss-tyk-gateway 8080:8080
+curl localhost:8080/hello
 ```
 
-2. Create .env file
-
-e.g. For dev environment, create `.env.dev` from [`.env`](./env)
-
-3. Install Redis
-```
-helm install tyk-redis bitnami/redis -n tyk-$TYK_ENV
-```
-
-4. Install Tyk Gateway
-```
-export REDIS_PASSWORD=$(kubectl get secret --namespace tyk-$TYK_ENV tyk-redis -o jsonpath="{.data.redis-password}" | base64 -d)
-
-# New charts
-git clone https://github.com/TykTechnologies/tyk-charts.git
-helm dependency update tyk-charts/tyk-mdcb-data-plane
-helm install tyk-dp tyk-charts/tyk-mdcb-data-plane -n tyk-$TYK_ENV --create-namespace -f ./tyk-charts/tyk-mdcb-data-plane/values.yaml -f .tyk-dp.env.$TYK_ENV --set global.redis.pass=$REDIS_PASSWORD
-
-# Old charts
-helm install tyk-hybrid tyk-helm/tyk-hybrid -f gateway-values.yaml -f .env.$TYK_ENV -n tyk$TYK_ENV --set redis.pass=$REDIS_PASSWORD
-```
+References: https://github.com/TykTechnologies/tyk-charts/tree/main/tyk-oss 

@@ -1,17 +1,17 @@
-# tyk-cicd-demo
+# Deploy Fast, Without Breaking Things: Level Up APIOps With OpenTelemetry
 
-This is a playground for demostrating how to control deployment of APIs in CI/CD use Tyk Operator or Tyk Sync.
+This is a demo project for the talk "Deploy Fast, Without Breaking Things: Level Up APIOps With OpenTelemetry", based on https://github.com/caroltyk/tyk-cicd-demo2.
 
-## Example 1 - Deploying your application and API configurations using Helm and ArgoCD
-In this example, you'll use Helm to package your applications with API configurations. The Helm Chart and manifests are committed to Git. ArgoCD will automatically re-deploy (sync) your Helm Chart.
+
+## Deploying demo application and API definition with Helm and ArgoCD
+
+In this example, you'll use Helm to package your applications with API definition. The Helm Chart and manifests are committed to Git. ArgoCD will automatically re-deploy (sync) your Helm Chart.
 
 1. Environment setup
 
 First, setup your Tyk environments for testing. In this demo, we assume 3 environments (dev, staging, prod).
 
 Then, setup some local Kubernetes clusters where you can deploy ArgoCD, Tyk Operator, and the applications.
-
-![Tyk Operator Environment Setup](./images/tyk-operator-setup.jpg)
 
 For testing, spin up two local clusters:
 ```
@@ -25,7 +25,7 @@ kubectx staging
 kubectx production
 ```
 
-2. Install Tyk (Hybrid Gateways)
+2. Install Tyk
 
 Follow [`gateway-configs`](./gateway-configs/) to install Tyk.
 
