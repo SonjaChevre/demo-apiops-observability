@@ -16,4 +16,4 @@ spec:
       - name: go-httpbin
         image: mccutchen/go-httpbin:v2.13.1
         ports:
-        - containerPort: 8090
+        - containerPort: 8080
