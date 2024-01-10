@@ -12,6 +12,10 @@ spec:
       parameters:
         - name: global.secrets.APISecret
           value: BananaSplit42
+        - name: global.redis.pass
+          value: 
+        - name: global.redis.addrs
+          value: 'tyk-redis-master.tyk.svc:6379'
     chart: tyk-oss
   destination:
     server: 'https://kubernetes.default.svc'
