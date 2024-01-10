@@ -47,3 +47,12 @@ kubectl apply -f ./argocd/application-go-httpbin.yaml
 kubectl apply -f ./argocd/application-redis.yaml
 ```
 
+```
+kubectl get secret --namespace tyk tyk-redis-application -o jsonpath="{.data.redis-password}" | base64 -d
+```
+
+Use the pwd to update the value of global.redis.pass in ./argocd/application-tyk.yaml
+
+```
+kubectl apply -f ./argocd/application-tyk.yaml
+```
