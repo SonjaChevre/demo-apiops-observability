@@ -1,0 +1,26 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tyk-gateway-argo-application
+  namespace: argocd
+  spec:
+    project: default
+  source:
+    repoURL: 'https://helm.tyk.io/public/helm/charts/'
+    targetRevision: 1.2.0
+    helm:
+      parameters:
+        - name: global.secrets.APISecret
+          value: BananaSplit42
+    chart: tyk-oss
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: tyk
+    
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
+    automated:
+      selfHeal: true
+      prune: true

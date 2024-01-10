@@ -1,3 +1,0 @@
-httpbin app is deployed to {{ .Release.Namespace }}
-
-Access via API endpoint: {{ .Values.api.listenPath }}
