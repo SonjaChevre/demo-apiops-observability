@@ -5,27 +5,49 @@ This is a demo project for the talk "Deploy Fast, Without Breaking Things: Level
 
 ## Deploying demo application and API definition with Helm and ArgoCD
 
-In this example, you'll use Helm to package your applications with API definition. The Helm Chart and manifests are committed to Git. ArgoCD will automatically re-deploy (sync) your Helm Chart.
+### Staging environment setup
 
-1. Environment setup
+First, setup your staging environment. In this demo, we will assume 2 environments (staging and prod).
 
-First, setup your Tyk environments for testing. In this demo, we assume 3 environments (dev, staging, prod).
+#### Create a local Kubernetes cluster
 
-Then, setup some local Kubernetes clusters where you can deploy ArgoCD, Tyk Operator, and the applications.
-
-For testing, spin up two local clusters:
 ```
 minikube start -p staging
-minikube start -p production
 ```
 
-To switch cluster:
+Later, to switch cluster use:
 ```
 kubectx staging
 kubectx production
 ```
 
-2. Install Tyk
+#### Install ArgoCD
+
+Here are the commands needed to Install ArgoCD on your cluster. Refer to [ArgoCD documentation](https://argo-cd.readthedocs.io/en/stable/getting_started/) for more details. 
+
+```
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+```
+
+
+```
+kubectl port-forward svc/argocd-server -n argocd 9080:443
+```
+
+retrieve default password
+```
+argocd admin initial-password -n argocd
+```
+
+#### Configure ArgoCD application for go-httpbin
+
+```
+kubectl apply -f ./argocd/application-go-httpbin.yaml
+kubectl apply -f ./argocd/application-redis.yaml
+```
+
+#### Install Tyk
 
 Follow [`gateway-configs`](./gateway-configs/) to install Tyk.
 
@@ -37,11 +59,22 @@ Follow [`operator-configs`](./operator-configs/) to install Tyk Operator and con
 
 [Install ArgoCD](https://argo-cd.readthedocs.io/en/stable/getting_started/) on your cluster.
 
+```
+kubectl create namespace argocd
+kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
+```
+
+```
+kubectl port-forward svc/argocd-server -n argocd 8081:443
+```
+
+retrieve default password
+```
+argocd admin initial-password -n argocd
+```
+
 5. Example HTTP API - See [httpbin](./httpbin/)
 
-<!--
-6. Example OAS HTTP API - See [petstore](./petstore/)
--->
 
 6. To enable GitOps management of your application and APIs, create some ArgoCD Applications, e.g.:
 

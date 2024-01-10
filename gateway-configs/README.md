@@ -14,7 +14,7 @@ helm upgrade tyk-oss tyk-helm/tyk-oss -n $NAMESPACE --create-namespace \
   --set global.redis.addrs="{tyk-redis-master.$NAMESPACE.svc:6379}" \
   --set global.redis.passSecret.name=tyk-redis \
   --set global.redis.passSecret.keyName=redis-password
-  ```
+```
 
 
 To quickly test everything is ok, you can port-forward Tyk Gateway pod:
