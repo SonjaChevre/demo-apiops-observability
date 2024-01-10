@@ -15,7 +15,12 @@ First, setup your staging environment. In this demo, we will assume 2 environmen
 minikube start -p staging
 ```
 
-Later, to switch cluster use:
+Later, to see how list the clusters:
+```
+minikube profile list
+```
+
+Then to switch cluster use:
 ```
 kubectx staging
 kubectx production
@@ -35,10 +40,12 @@ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/st
 kubectl port-forward svc/argocd-server -n argocd 9080:443
 ```
 
-retrieve default password
+retrieve default password (you might need to open another terminal window for that):
+
 ```
 argocd admin initial-password -n argocd
 ```
+
 
 #### Configure ArgoCD applications for go-httpbin, redis and tyk gateway
 
