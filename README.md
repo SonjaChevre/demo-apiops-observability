@@ -35,7 +35,6 @@ kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 ```
 
-
 ```
 kubectl port-forward svc/argocd-server -n argocd 9080:443
 ```
@@ -47,19 +46,11 @@ argocd admin initial-password -n argocd
 ```
 
 
-#### Configure ArgoCD applications for go-httpbin, redis and tyk gateway
+#### Configure ArgoCD applications
 
 ```
 kubectl apply -f ./argocd/application-go-httpbin.yaml
 kubectl apply -f ./argocd/application-redis.yaml
-```
-
-```
-kubectl get secret --namespace tyk tyk-redis-application -o jsonpath="{.data.redis-password}" | base64 -d
-```
-
-Use the pwd to update the value of global.redis.pass in ./argocd/application-tyk.yaml
-
-```
 kubectl apply -f ./argocd/application-tyk.yaml
+kubectl apply -f ./argocd/application-cert-manager.yaml
 ```
