@@ -3,8 +3,8 @@ kind: Application
 metadata:
   name: tyk-gateway-argo-application
   namespace: argocd
-  spec:
-    project: default
+spec:
+  project: default
   source:
     repoURL: 'https://helm.tyk.io/public/helm/charts/'
     targetRevision: 1.2.0
@@ -16,7 +16,7 @@ metadata:
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: tyk
-    
+
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
