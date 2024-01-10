@@ -40,46 +40,10 @@ retrieve default password
 argocd admin initial-password -n argocd
 ```
 
-#### Configure ArgoCD application for go-httpbin
+#### Configure ArgoCD applications for go-httpbin, redis and tyk gateway
 
 ```
 kubectl apply -f ./argocd/application-go-httpbin.yaml
 kubectl apply -f ./argocd/application-redis.yaml
 ```
 
-#### Install Tyk
-
-Follow [`gateway-configs`](./gateway-configs/) to install Tyk.
-
-3. Install Tyk Operator
-
-Follow [`operator-configs`](./operator-configs/) to install Tyk Operator and configure OperatorContext to connect to different Tyk environments.
-
-4. Install ArgoCD
-
-[Install ArgoCD](https://argo-cd.readthedocs.io/en/stable/getting_started/) on your cluster.
-
-```
-kubectl create namespace argocd
-kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
-```
-
-```
-kubectl port-forward svc/argocd-server -n argocd 8081:443
-```
-
-retrieve default password
-```
-argocd admin initial-password -n argocd
-```
-
-5. Example HTTP API - See [httpbin](./httpbin/)
-
-
-6. To enable GitOps management of your application and APIs, create some ArgoCD Applications, e.g.:
-
-```
-kubectl apply -f argocd/httpbin-applicationset.yaml
-```
-
-This will automatically deploy applications to multiple environments during ArgoCD synchronization.
