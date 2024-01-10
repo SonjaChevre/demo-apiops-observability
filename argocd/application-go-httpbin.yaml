@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: go-httpbin-argo-application
+  name: go-httpbin-application
   namespace: argocd
 spec:
   project: default
