@@ -10,12 +10,14 @@ spec:
     targetRevision: 1.2.0
     helm:
       parameters:
-        - name: global.secrets.APISecret
-          value: BananaSplit42
-        - name: global.redis.pass
-          value: 
-        - name: global.redis.addrs
-          value: 'tyk-redis-master.tyk.svc:6379'
+      - name: global.secrets.APISecret
+        value: BananaSplit42
+      - name: global.redis.passSecret.name
+        value: tyk-redis-application
+      - name: global.redis.passSecret.keyName
+        value: redis-password
+      - name: global.redis.addrs
+        value: 'tyk-redis-application-master.tyk.svc:6379'
     chart: tyk-oss
   destination:
     server: 'https://kubernetes.default.svc'
