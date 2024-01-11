@@ -39,7 +39,7 @@ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/st
 kubectl port-forward svc/argocd-server -n argocd 9080:443
 ```
 
-retrieve default password (you might need to open another terminal window for that):
+retrieve default password (you might need to open another terminal window for that and have installed argocd CLI):
 
 ```
 argocd admin initial-password -n argocd
@@ -75,3 +75,5 @@ Try it out
 ```
 kubectl port-forward svc/gateway-svc-tyk-gateway-application -n tyk 8080:8080
 ```
+
+TODO enable OTEL, add Jaeger, OTEL Collector, Jaeger and Grafana, Tracetest
