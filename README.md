@@ -54,3 +54,19 @@ kubectl apply -f ./argocd/application-redis.yaml
 kubectl apply -f ./argocd/application-tyk.yaml
 kubectl apply -f ./argocd/application-cert-manager.yaml
 ```
+
+TODO: remove this manual step of creating the secret
+
+```
+kubectl create namespace tyk-operator-system
+kubectl create secret -n tyk-operator-system generic tyk-operator-conf \
+  --from-literal "TYK_AUTH=BananaSplit42" \
+  --from-literal "TYK_ORG=org" \
+  --from-literal "TYK_MODE=ce" \
+  --from-literal "TYK_URL=gateway-svc-tyk-gateway-application.tyk.svc.cluster.local:8080" \
+  --from-literal "TYK_TLS_INSECURE_SKIP_VERIFY=true"
+```
+
+```
+kubectl apply -f ./argocd/application-tyk-operator.yaml
+```

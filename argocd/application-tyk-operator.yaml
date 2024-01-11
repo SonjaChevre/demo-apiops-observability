@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tyk-operator-application
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://helm.tyk.io/public/helm/charts/'
+    targetRevision: 0.15.1
+    chart: tyk-operator
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: tyk-operator-system
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
+    automated:
+      selfHeal: true
+      prune: true
