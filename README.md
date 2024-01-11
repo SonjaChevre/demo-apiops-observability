@@ -67,4 +67,11 @@ kubectl create secret -n tyk-operator-system generic tyk-operator-conf \
 
 ```
 kubectl apply -f ./staging/argocd/application-tyk-operator.yaml
+kubectl apply -f ./staging/argocd/application-api-definitions.yaml
+```
+
+Try it out
+
+```
+kubectl port-forward svc/gateway-svc-tyk-gateway-application -n tyk 8080:8080
 ```
