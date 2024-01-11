@@ -11,7 +11,7 @@ spec:
     chart: tyk-operator
   destination:
     server: 'https://kubernetes.default.svc'
-    namespace: tyk-operator-system
+    namespace: tyk
   syncPolicy:
     syncOptions:
     - CreateNamespace=true

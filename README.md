@@ -49,13 +49,11 @@ argocd admin initial-password -n argocd
 #### Configure ArgoCD applications
 
 ```
-kubectl apply -f ./argocd/application-go-httpbin.yaml
-kubectl apply -f ./argocd/application-redis.yaml
-kubectl apply -f ./argocd/application-tyk.yaml
-kubectl apply -f ./argocd/application-cert-manager.yaml
+kubectl apply -f ./staging/argocd/application-go-httpbin.yaml
+kubectl apply -f ./staging/argocd/application-redis.yaml
+kubectl apply -f ./staging/argocd/application-tyk-gateway.yaml
+kubectl apply -f ./staging/argocd/application-cert-manager.yaml
 ```
-
-TODO: remove this manual step of creating the secret
 
 ```
 kubectl create namespace tyk-operator-system
@@ -68,5 +66,5 @@ kubectl create secret -n tyk-operator-system generic tyk-operator-conf \
 ```
 
 ```
-kubectl apply -f ./argocd/application-tyk-operator.yaml
+kubectl apply -f ./staging/argocd/application-tyk-operator.yaml
 ```
