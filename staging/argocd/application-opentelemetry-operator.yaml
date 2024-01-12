@@ -7,15 +7,15 @@ spec:
   project: default
   source:
     repoURL: 'https://open-telemetry.github.io/opentelemetry-helm-charts'
-    targetRevision: 0.78.0
-    helm:
-      parameters:
-        - name: mode
-          value: deployment
-    chart: opentelemetry-collector
+    targetRevision: 0.45.2
+    chart: opentelemetry-operator
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: observability
   syncPolicy:
     syncOptions:
-      - CreateNamespace=true
+    - CreateNamespace=true
+
+    automated:
+      selfHeal: true
+      prune: true
