@@ -60,7 +60,7 @@ kubectl create secret -n tyk generic tyk-operator-conf \
   --from-literal "TYK_AUTH=BananaSplit42" \
   --from-literal "TYK_ORG=org" \
   --from-literal "TYK_MODE=ce" \
-  --from-literal "TYK_URL=gateway-svc-tyk-gateway-application.tyk.svc.cluster.local:8080" \
+  --from-literal "TYK_URL=http://gateway-svc-tyk-gateway-application.tyk.svc.cluster.local:8080" \
   --from-literal "TYK_TLS_INSECURE_SKIP_VERIFY=true"
 ```
 
