@@ -56,8 +56,7 @@ kubectl apply -f ./staging/argocd/application-cert-manager.yaml
 ```
 
 ```
-kubectl create namespace tyk-operator-system
-kubectl create secret -n tyk-operator-system generic tyk-operator-conf \
+kubectl create secret -n tyk generic tyk-operator-conf \
   --from-literal "TYK_AUTH=BananaSplit42" \
   --from-literal "TYK_ORG=org" \
   --from-literal "TYK_MODE=ce" \
