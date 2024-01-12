@@ -1,35 +1,29 @@
-apiVersion: opentelemetry.io/v1alpha1
-kind: OpenTelemetryCollector
-metadata:
-  name: otel-collector
-spec:
-  mode: deployment
-  image: otel/opentelemetry-collector-contrib:latest
-  config: |
-    receivers:
-      otlp:
-        protocols:
-          grpc: 
-
-    processors:
-      batch:
-        timeout: 1s
-
-      resource:
-        attributes:
-          - key: k8s.cluster.name
-            from_attribute: k8s-cluster
-            action: insert
-
-    exporters:
-      otlp:
-        endpoint: simplest-collector.observability.svc:4317
-
-    service:
-      pipelines:
-        traces:
-          receivers: [otlp]
-          processors: [resource, batch]
-          exporters: [otlp]
-    |
-
+mode: deployment
+config:
+  receivers:
+    otlp:
+      protocols:
+        http:
+          endpoint: ${env:MY_POD_IP}:4318
+        grpc:
+          endpoint: ${env:MY_POD_IP}:4317
+  processors:
+    batch: {}
+  exporters:
+    jaeger:
+      endpoint: "jaeger-all-in-one-collector.observability.svc.cluster.local:4317"
+      tls:
+        insecure: true
+  extensions:
+    health_check: {}
+    pprof:
+      endpoint: :1888
+    zpages:
+      endpoint: :55679
+  service:
+    extensions: [pprof, zpages, health_check]
+    pipelines:
+      traces:
+        receivers: [otlp]
+        processors: [batch]
+        exporters: [jaeger]
