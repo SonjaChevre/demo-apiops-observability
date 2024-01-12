@@ -76,3 +76,4 @@ kubectl port-forward svc/gateway-svc-tyk-gateway-application -n tyk 8080:8080
 ```
 
 TODO enable OTEL, add Jaeger, OTEL Collector, Jaeger and Grafana, Tracetest
+TODO implement persistent storage for tyk
