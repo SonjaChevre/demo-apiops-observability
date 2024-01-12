@@ -13,7 +13,7 @@ data:
       batch:
     exporters:
       otlp:
-        endpoint: "opentelemetrycollector.default.svc.cluster.local:4317"
+        endpoint: "jaeger-all-in-one-collector.observability.svc.cluster.local:4317"
         insecure: true
     service:
       pipelines:
@@ -25,16 +25,16 @@ data:
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: opentelemetrycollector
+  name: opentelemetry-collector
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app.kubernetes.io/name: opentelemetrycollector
+      app.kubernetes.io/name: opentelemetry-collector
   template:
     metadata:
       labels:
-        app.kubernetes.io/name: opentelemetrycollector
+        app.kubernetes.io/name: opentelemetry-collector
     spec:
       containers:
       - name: otelcol
@@ -63,5 +63,5 @@ spec:
     protocol: TCP
     targetPort: 4317
   selector:
-    app.kubernetes.io/name: opentelemetrycollector
+    app.kubernetes.io/name: opentelemetry-collector
   type: ClusterIP
