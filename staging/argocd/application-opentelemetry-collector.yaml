@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: opentelemetry-collector
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://open-telemetry.github.io/opentelemetry-helm-charts'
+    targetRevision: 0.78.0
+    helm:
+      parameters:
+        - name: mode
+          value: deployment
+    chart: opentelemetry-collector
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: observability
+  syncPolicy:
+    syncOptions:
+      - CreateNamespace=true
