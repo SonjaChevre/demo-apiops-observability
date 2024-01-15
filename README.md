@@ -114,8 +114,21 @@ kubectl port-forward svc/tracetest -n tracetest 11633:11633
 
 Run a test:
 
-```
-GET http://gateway-svc-tyk-gateway-application.tyk.svc.cluster.local:8080/httpbin/get
+Tracetest YAML test definition
+
+```yaml
+type: Test
+spec:
+  id: BtGGxD5SR
+  name: Test HTTPBin
+  trigger:
+    type: http
+    httpRequest:
+      method: GET
+      url: http://gateway-svc-tyk-gateway-application.tyk.svc.cluster.local:8080/httpbin/get
+      headers:
+      - key: Content-Type
+        value: application/json
 ```
 
 ![Tracetest test](https://res.cloudinary.com/djwdcmwdz/image/upload/v1705323131/Conferences/fosdem2024/localhost_11633_test_btVZdD5IR_run_3_trace_kvtzuq.png)
