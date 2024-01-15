@@ -5,24 +5,26 @@ metadata:
   name: collector-config
 data:
   collector.yaml: |
-    receivers:
-      otlp:
-        protocols: 
-          grpc:
-    processors:
-      batch:
-    exporters:
-      otlp:
-        endpoint: "jaeger-all-in-one-collector.observability.svc.cluster.local:4317"
-        insecure: true
-    service:
-      pipelines:
-        traces:
-          receivers: [otlp]
-          processors: [batch]
-          exporters: [otlp]
+  receivers:
+    otlp:
+      protocols: 
+        grpc:
+  processors:
+    batch:
+  exporters:
+    otlp:
+      endpoint: "jaeger-all-in-one-collector.observability.svc.cluster.local:4317"
+      insecure: true
+  service:
+    pipelines:
+      traces:
+        receivers: [otlp]
+        processors: [batch]
+        exporters: [otlp]
 
-    |
+    telemetry:
+      logs:
+        level: debug |
 ---
 apiVersion: apps/v1
 kind: Deployment
