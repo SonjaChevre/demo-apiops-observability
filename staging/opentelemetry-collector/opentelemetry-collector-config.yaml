@@ -24,7 +24,8 @@ data:
 
       telemetry:
         logs:
-          level: "debug"
+          level: debug
+          
     |
 ---
 apiVersion: apps/v1
