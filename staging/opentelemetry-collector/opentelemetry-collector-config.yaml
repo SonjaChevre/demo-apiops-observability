@@ -15,14 +15,13 @@ data:
       otlp:
         endpoint: "jaeger-all-in-one-collector.observability.svc.cluster.local:4317"
         tls:
-        insecure: true
+          insecure: true
     service:
       pipelines:
         traces:
           receivers: [otlp]
           processors: [batch]
           exporters: [otlp]
-
       telemetry:
         logs:
           level: debug
