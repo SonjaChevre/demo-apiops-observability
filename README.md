@@ -53,6 +53,7 @@ Tyk:
 ```
 kubectl apply -f ./staging/argocd/application-go-httpbin.yaml
 kubectl apply -f ./staging/argocd/application-redis.yaml
+kubectl apply -f ./staging/argocd/application-tyk-gateway-conf.yaml
 kubectl apply -f ./staging/argocd/application-tyk-gateway.yaml
 kubectl apply -f ./staging/argocd/application-cert-manager.yaml
 ```
@@ -91,6 +92,12 @@ Tyk:
 
 ```
 kubectl port-forward svc/gateway-svc-tyk-gateway-application -n tyk 8080:8080
+```
+
+```
+kubectl apply -f ./staging/argocd/application-opentelemetry-collector.yaml
+kubectl apply -f ./staging/argocd/application-jaeger-operator.yaml
+kubectl apply -f ./staging/argocd/application-jaeger-all-in-one.yaml
 ```
 
 Jaeger:
