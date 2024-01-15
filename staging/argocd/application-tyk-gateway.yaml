@@ -18,6 +18,12 @@ spec:
         value: redis-password
       - name: global.redis.addrs
         value: 'tyk-redis-application-master.tyk.svc:6379'
+      - name: tyk-gateway.gateway.opentelemetry.enabled
+        value: 'true'
+      - name: tyk-gateway.gateway.opentelemetry.endpoint
+        value: 'opentelemetry-collector.observability.svc:4317'
+      - name: tyk-gateway.gateway.opentelemetry.exporter
+        value: 'grpc'
     chart: tyk-oss
   destination:
     server: 'https://kubernetes.default.svc'

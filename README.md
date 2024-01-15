@@ -84,3 +84,4 @@ kubectl port-forward svc/simplest-query -n observability 16686:16686
 
 TODO enable OTEL, add Jaeger, OTEL Collector, Jaeger and Grafana, Tracetest
 TODO implement persistent storage for tyk
+TODO expose directly on localhost, not having to use port redirect
