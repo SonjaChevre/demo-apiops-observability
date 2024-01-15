@@ -109,7 +109,7 @@ kubectl port-forward svc/jaeger-all-in-one-query -n observability 16686:16686
 Tracetest:
 
 ```
-kubectl port-forward svc/tracetest-helm -n tracetest 11633:11633
+kubectl port-forward svc/tracetest -n tracetest 11633:11633
 ```
 
 Run a test:

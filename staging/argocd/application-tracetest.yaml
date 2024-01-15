@@ -10,10 +10,8 @@ spec:
     chart: 'tracetest'
     targetRevision: 0.3.4
     helm:
-      parameters:
-      - name: provisioning
-        value: |
-          ---
+      values: |-
+        provisioning:
           type: DataStore
           spec:
             name: Jaeger
@@ -22,10 +20,16 @@ spec:
               endpoint: jaeger-all-in-one-query.observability.svc.cluster.local:16685
               tls:
                 insecure: true
-          ---
-          type: Config
-          spec:
-            analyticsEnabled: false
+        telemetry:
+          exporters:
+            collector:
+              serviceName: tracetest
+              sampling: 100
+              exporter:
+                type: collector
+                collector:
+                  endpoint: opentelemetry-collector.observability.svc.cluster.local:4317
+
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: tracetest
