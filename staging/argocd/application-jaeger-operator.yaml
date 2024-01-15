@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: jaeger-all-in-one
+  name: jaeger-operator
   namespace: argocd
 spec:
   project: default
