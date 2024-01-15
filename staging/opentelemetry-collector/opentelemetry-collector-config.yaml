@@ -22,10 +22,6 @@ data:
           processors: [batch]
           exporters: [otlp]
 
-      telemetry:
-        logs:
-          level: debug
-          
     |
 ---
 apiVersion: apps/v1
