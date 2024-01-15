@@ -7,7 +7,7 @@ spec:
   project: default
   source:
     repoURL: 'https://helm.tyk.io/public/helm/charts/'
-    targetRevision: 0.15.1
+    targetRevision: 0.16.0
     chart: tyk-operator
   destination:
     server: 'https://kubernetes.default.svc'
