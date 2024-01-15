@@ -78,7 +78,7 @@ kubectl port-forward svc/gateway-svc-tyk-gateway-application -n tyk 8080:8080
 Jaeger:
 
 ```
-kubectl port-forward svc/simplest-query -n observability 16686:16686
+kubectl port-forward svc/jaeger-all-in-one-query -n observability 16686:16686
 ```
 
 
