@@ -1,0 +1,39 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tracetest
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://kubeshop.github.io/helm-charts/'
+    chart: 'tracetest'
+    targetRevision: 0.3.4
+    helm:
+      parameters:
+      - name: provisioning
+        value: |
+          ---
+          type: DataStore
+          spec:
+            name: Jaeger
+            type: jaeger
+            jaeger:
+              endpoint: jaeger-all-in-one-query.observability.svc.cluster.local:16685
+              tls:
+                insecure: true
+          ---
+          type: Config
+          spec:
+            analyticsEnabled: false
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: tracetest
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
+    automated:
+      selfHeal: true
+      prune: true

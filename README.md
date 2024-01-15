@@ -48,6 +48,8 @@ argocd admin initial-password -n argocd
 
 #### Configure ArgoCD applications
 
+Tyk:
+
 ```
 kubectl apply -f ./staging/argocd/application-go-httpbin.yaml
 kubectl apply -f ./staging/argocd/application-redis.yaml
@@ -69,7 +71,23 @@ kubectl apply -f ./staging/argocd/application-tyk-operator.yaml
 kubectl apply -f ./staging/argocd/application-api-definitions.yaml
 ```
 
-Try it out
+Observability:
+
+```
+kubectl apply -f ./staging/argocd/application-jaeger-operator.yaml
+kubectl apply -f ./staging/argocd/application-jaeger-all-in-one.yaml
+kubectl apply -f ./staging/argocd/application-opentelemetry-collector.yaml
+```
+
+Tracetest:
+
+```
+kubectl apply -f ./staging/argocd/application-tracetest.yaml
+```
+
+#### Try it out
+
+Tyk:
 
 ```
 kubectl port-forward svc/gateway-svc-tyk-gateway-application -n tyk 8080:8080
@@ -81,7 +99,21 @@ Jaeger:
 kubectl port-forward svc/jaeger-all-in-one-query -n observability 16686:16686
 ```
 
+Tracetest:
 
-TODO add Tracetest
-TODO implement persistent storage for tyk
-TODO expose directly on localhost, not having to use port redirect
+```
+kubectl port-forward svc/tracetest-helm -n tracetest 11633:11633
+```
+
+Run a test:
+
+```
+GET http://gateway-svc-tyk-gateway-application.tyk.svc.cluster.local:8080/httpbin/get
+```
+
+![Tracetest test](https://res.cloudinary.com/djwdcmwdz/image/upload/v1705323131/Conferences/fosdem2024/localhost_11633_test_btVZdD5IR_run_3_trace_kvtzuq.png)
+
+## TODO
+
+- [ ] implement persistent storage for tyk
+- [ ] expose directly on localhost, not having to use port redirect
