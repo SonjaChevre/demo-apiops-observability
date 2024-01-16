@@ -39,14 +39,14 @@ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/st
 kubectl port-forward svc/argocd-server -n argocd 9080:443
 ```
 
-retrieve default password (you might need to open another terminal window for that and have installed argocd CLI):
+[Download Argo CD CLI](https://argo-cd.readthedocs.io/en/stable/getting_started/#2-download-argo-cd-cli) and retrieve default admin password:
 
 ```
 argocd admin initial-password -n argocd
 ```
 
 
-#### Configure ArgoCD applications
+#### Configure Tyk, Tyk Operator, go-httbin demo API and all the required dependency
 
 Tyk:
 
@@ -72,41 +72,41 @@ kubectl apply -f ./staging/argocd/application-tyk-operator.yaml
 kubectl apply -f ./staging/argocd/application-api-definitions.yaml
 ```
 
-Observability:
-
-```
-kubectl apply -f ./staging/argocd/application-jaeger-operator.yaml
-kubectl apply -f ./staging/argocd/application-jaeger-all-in-one.yaml
-kubectl apply -f ./staging/argocd/application-opentelemetry-collector.yaml
-```
-
-Tracetest:
-
-```
-kubectl apply -f ./staging/argocd/application-tracetest.yaml
-```
-
-#### Try it out
-
-Tyk:
+Try it out:
 
 ```
 kubectl port-forward svc/gateway-svc-tyk-gateway-application -n tyk 8080:8080
 ```
 
+* Tyk health endpoint: http://localhost:8080/hello
+* go-httpbin: http://localhost:8080/httpbin/
+
+#### Configure OpenTelemetry Collector and Jaeger
+
+
 ```
 kubectl apply -f ./staging/argocd/application-opentelemetry-collector.yaml
 kubectl apply -f ./staging/argocd/application-jaeger-operator.yaml
 kubectl apply -f ./staging/argocd/application-jaeger-all-in-one.yaml
 ```
 
-Jaeger:
+Try it out:
 
 ```
 kubectl port-forward svc/jaeger-all-in-one-query -n observability 16686:16686
 ```
 
-Tracetest:
+* Make a couple of calls to: http://localhost:8080/httpbin/get
+* Look at the distributed traces in Jaeger: http://localhost:16686
+
+
+#### Configure Tracetest
+
+```
+kubectl apply -f ./staging/argocd/application-tracetest.yaml
+```
+
+Try it out:
 
 ```
 kubectl port-forward svc/tracetest -n tracetest 11633:11633
@@ -133,7 +133,6 @@ spec:
 
 ![Tracetest test](https://res.cloudinary.com/djwdcmwdz/image/upload/v1705323131/Conferences/fosdem2024/localhost_11633_test_btVZdD5IR_run_3_trace_kvtzuq.png)
 
-## TODO
 
-- [ ] implement persistent storage for tyk
-- [ ] expose directly on localhost, not having to use port redirect
+TODO expose directly on localhost, not having to use port redirect
+
