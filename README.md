@@ -39,14 +39,14 @@ kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/st
 kubectl port-forward svc/argocd-server -n argocd 9080:443
 ```
 
-retrieve default password (you might need to open another terminal window for that and have installed argocd CLI):
+[Download Argo CD CLI](https://argo-cd.readthedocs.io/en/stable/getting_started/#2-download-argo-cd-cli) and retrieve default admin password:
 
 ```
 argocd admin initial-password -n argocd
 ```
 
 
-#### Configure ArgoCD applications
+#### Configure Tyk, Tyk Operator, go-httbin demo API and all the required depedency
 
 ```
 kubectl apply -f ./staging/argocd/application-go-httpbin.yaml

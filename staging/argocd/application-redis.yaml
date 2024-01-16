@@ -7,11 +7,12 @@ spec:
   project: default
   source:
     repoURL: 'https://charts.bitnami.com/bitnami'
-    targetRevision: 17.11.3
+    targetRevision: 18.6.4
     helm:
       parameters:
         - name: image.tag
           value: 6.2.13
+    chart: redis
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: tyk
