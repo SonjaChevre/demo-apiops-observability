@@ -48,6 +48,8 @@ argocd admin initial-password -n argocd
 
 #### Configure Tyk, Tyk Operator, go-httbin demo API and all the required dependency
 
+Tyk:
+
 ```
 kubectl apply -f ./staging/argocd/application-go-httpbin.yaml
 kubectl apply -f ./staging/argocd/application-redis.yaml
@@ -100,6 +102,37 @@ kubectl port-forward svc/jaeger-all-in-one-query -n observability 16686:16686
 
 #### Configure Tracetest
 
+```
+kubectl apply -f ./staging/argocd/application-tracetest.yaml
+```
 
-TODO add Tracetest
+Try it out:
+
+```
+kubectl port-forward svc/tracetest -n tracetest 11633:11633
+```
+
+Run a test:
+
+Tracetest YAML test definition
+
+```yaml
+type: Test
+spec:
+  id: BtGGxD5SR
+  name: Test HTTPBin
+  trigger:
+    type: http
+    httpRequest:
+      method: GET
+      url: http://gateway-svc-tyk-gateway-application.tyk.svc.cluster.local:8080/httpbin/get
+      headers:
+      - key: Content-Type
+        value: application/json
+```
+
+![Tracetest test](https://res.cloudinary.com/djwdcmwdz/image/upload/v1705323131/Conferences/fosdem2024/localhost_11633_test_btVZdD5IR_run_3_trace_kvtzuq.png)
+
+
 TODO expose directly on localhost, not having to use port redirect
+
