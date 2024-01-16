@@ -46,7 +46,7 @@ argocd admin initial-password -n argocd
 ```
 
 
-#### Configure Tyk, Tyk Operator, go-httbin demo API and all the required depedency
+#### Configure Tyk, Tyk Operator, go-httbin demo API and all the required dependency
 
 ```
 kubectl apply -f ./staging/argocd/application-go-httpbin.yaml
@@ -70,11 +70,17 @@ kubectl apply -f ./staging/argocd/application-tyk-operator.yaml
 kubectl apply -f ./staging/argocd/application-api-definitions.yaml
 ```
 
-Try it out
+Try it out:
 
 ```
 kubectl port-forward svc/gateway-svc-tyk-gateway-application -n tyk 8080:8080
 ```
+
+* Tyk health endpoint: http://localhost:8080/hello
+* go-httpbin: http://localhost:8080/httpbin/
+
+#### Configure OpenTelemetry Collector and Jaeger
+
 
 ```
 kubectl apply -f ./staging/argocd/application-opentelemetry-collector.yaml
@@ -82,13 +88,18 @@ kubectl apply -f ./staging/argocd/application-jaeger-operator.yaml
 kubectl apply -f ./staging/argocd/application-jaeger-all-in-one.yaml
 ```
 
-Jaeger:
+Try it out:
 
 ```
 kubectl port-forward svc/jaeger-all-in-one-query -n observability 16686:16686
 ```
 
+* Make a couple of calls to: http://localhost:8080/httpbin/get
+* Look at the distributed traces in Jaeger: http://localhost:16686
+
+
+#### Configure Tracetest
+
 
 TODO add Tracetest
-TODO implement persistent storage for tyk
 TODO expose directly on localhost, not having to use port redirect
