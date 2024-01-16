@@ -1,6 +1,9 @@
 # Deploy Fast, Without Breaking Things: Level Up APIOps With OpenTelemetry
 
-This is a demo project for the talk "Deploy Fast, Without Breaking Things: Level Up APIOps With OpenTelemetry", based on https://github.com/caroltyk/tyk-cicd-demo2.
+This is a demo project for the talk "Deploy Fast, Without Breaking Things: Level Up APIOps With OpenTelemetry" from [Sonja Chevre](https://www.linkedin.com/in/sonjachevre/) and [Adnan Rahić](https://www.linkedin.com/in/adnanrahic/).
+
+
+This demo started as a fork from https://github.com/caroltyk/tyk-cicd-demo2.
 
 
 ## Deploying demo application and API definition with Helm and ArgoCD
@@ -132,7 +135,3 @@ spec:
 ```
 
 ![Tracetest test](https://res.cloudinary.com/djwdcmwdz/image/upload/v1705323131/Conferences/fosdem2024/localhost_11633_test_btVZdD5IR_run_3_trace_kvtzuq.png)
-
-
-TODO expose directly on localhost, not having to use port redirect
-
