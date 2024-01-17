@@ -1,0 +1,17 @@
+type: Test
+spec:
+  id: nf4f055Sg
+  name: Test HTTPBin
+  trigger:
+    type: http
+    httpRequest:
+      method: GET
+      url: http://gateway-svc-tyk-gateway-application.tyk.svc.cluster.local:8080/httpbin/get
+      headers:
+      - key: Content-Type
+        value: application/json
+  specs:
+  - selector: span[tracetest.span.type="http"]
+    name: "All HTTP Spans: Status code is 200"
+    assertions:
+    - attr:http.status_code = 200

@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  generateName: integration-tracetest-
+  namespace: tracetest
+  annotations:
+    argocd.argoproj.io/hook: PostSync
+    argocd.argoproj.io/hook-delete-policy: HookSucceeded
+spec:
+  template:
+    spec:
+      containers:
+      - name: integration-tracetest
+        image: adnanrahic/demo-apiops-observability
+        imagePullPolicy: Always
+      restartPolicy: Never
+  backoffLimit: 1

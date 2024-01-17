@@ -48,7 +48,6 @@ kubectl port-forward svc/argocd-server -n argocd 9080:443
 argocd admin initial-password -n argocd
 ```
 
-
 #### Configure Tyk, Tyk Operator, go-httbin demo API and all the required dependency
 
 Tyk:
@@ -86,7 +85,6 @@ kubectl port-forward svc/gateway-svc-tyk-gateway-application -n tyk 8080:8080
 
 #### Configure OpenTelemetry Collector and Jaeger
 
-
 ```
 kubectl apply -f ./staging/argocd/application-opentelemetry-collector.yaml
 kubectl apply -f ./staging/argocd/application-jaeger-operator.yaml
@@ -101,7 +99,6 @@ kubectl port-forward svc/jaeger-all-in-one-query -n observability 16686:16686
 
 * Make a couple of calls to: http://localhost:8080/httpbin/get
 * Look at the distributed traces in Jaeger: http://localhost:16686
-
 
 #### Configure Tracetest
 
@@ -122,7 +119,7 @@ Tracetest YAML test definition
 ```yaml
 type: Test
 spec:
-  id: BtGGxD5SR
+  id: nf4f055Sg
   name: Test HTTPBin
   trigger:
     type: http
@@ -132,6 +129,50 @@ spec:
       headers:
       - key: Content-Type
         value: application/json
+  specs:
+  - selector: span[tracetest.span.type="http"]
+    name: "All HTTP Spans: Status code is 200"
+    assertions:
+    - attr:http.status_code = 200
 ```
 
 ![Tracetest test](https://res.cloudinary.com/djwdcmwdz/image/upload/v1705323131/Conferences/fosdem2024/localhost_11633_test_btVZdD5IR_run_3_trace_kvtzuq.png)
+
+#### Configure an ArgoCD resource hook (needs a workaround)
+
+[Hooks](https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/) are simply Kubernetes manifests tracked in the source repository of your Argo CD Application annotated with `argocd.argoproj.io/hook`.
+
+Build the Docker image for the hook.
+
+```
+docker build . -t <your_username>/demo-apiops-observability
+```
+
+Push the Docker image to Docker Hub.
+
+```
+docker push <your_username>/demo-apiops-observability:latest
+```
+
+(Optional): Use a prebuilt sample image:
+
+```
+adnanrahic/demo-apiops-observability:latest
+```
+
+Apply the hook.
+
+```
+kubectl apply -f ./staging/argocd/application-integration-tracetest.yaml
+```
+
+<!-- #### Configure Argo Workflows
+
+```
+kubectl create namespace argo
+kubectl apply -n argo -f https://github.com/argoproj/argo-workflows/releases/download/v3.5.4/quick-start-minimal.yaml
+```
+
+ -->
+
+...
