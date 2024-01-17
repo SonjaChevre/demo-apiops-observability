@@ -9,7 +9,7 @@ spec:
     server: https://kubernetes.default.svc
   project: default
   source:
-    repoURL: 'https://github.com/adnanrahic/demo-apiops-observability'
+    repoURL: 'https://github.com/SonjaChevre/demo-apiops-observability'
     path: staging/tracetest
     targetRevision: HEAD
   syncPolicy:
