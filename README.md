@@ -2,34 +2,39 @@
 
 This is a demo project for the talk "Deploy Fast, Without Breaking Things: Level Up APIOps With OpenTelemetry" from [Sonja Chevre](https://www.linkedin.com/in/sonjachevre/) and [Adnan Rahić](https://www.linkedin.com/in/adnanrahic/).
 
+This demo started as a fork from https://github.com/caroltyk/tyk-cicd-demo2. Thanks Carol for the inspiration!
 
-This demo started as a fork from https://github.com/caroltyk/tyk-cicd-demo2.
+Follow along to deploy 2 environments with ArgoCD, Tyk, OpenTelemetry, Jaeger and Tracetest. 
 
+## Create local Kubernetes cluster for staging and production
 
-## Deploying demo application and API definition with Helm and ArgoCD
-
-### Staging environment setup
-
-First, setup your staging environment. In this demo, we will assume 2 environments (staging and prod).
-
-#### Create a local Kubernetes cluster
+ In this demo, we will assume 2 environments (staging and prod) running in [minikube](https://minikube.sigs.k8s.io/docs/start/):
 
 ```
 minikube start -p staging
+minikube start -p production
 ```
 
-Later, to see how list the clusters:
+Later, to list the clusters:
 ```
 minikube profile list
 ```
 
-Then to switch cluster use:
+Then to switch cluster use [kubectx](https://github.com/ahmetb/kubectx):
 ```
 kubectx staging
 kubectx production
 ```
 
-#### Install ArgoCD
+## Deployment Staging environment
+
+Switch to the staging cluster: 
+
+```
+kubectx staging
+```
+
+## Install ArgoCD
 
 Here are the commands needed to Install ArgoCD on your cluster. Refer to [ArgoCD documentation](https://argo-cd.readthedocs.io/en/stable/getting_started/) for more details. 
 
@@ -38,19 +43,22 @@ kubectl create namespace argocd
 kubectl apply -n argocd -f https://raw.githubusercontent.com/argoproj/argo-cd/stable/manifests/install.yaml
 ```
 
+Forward the local port 9080 to ArgoCD's secure port (443) to access ArgoCD UI interface:
+
 ```
 kubectl port-forward svc/argocd-server -n argocd 9080:443
 ```
 
-[Download Argo CD CLI](https://argo-cd.readthedocs.io/en/stable/getting_started/#2-download-argo-cd-cli) and retrieve default admin password:
+[Download and install Argo CD CLI](https://argo-cd.readthedocs.io/en/stable/getting_started/#2-download-argo-cd-cli) and retrieve default admin password:
 
 ```
 argocd admin initial-password -n argocd
 ```
 
-#### Configure Tyk, Tyk Operator, go-httbin demo API and all the required dependency
+After following the steps below, this is how your ArgoCD instance should look like on the staging cluster: 
+![ArgoCD in staging](./images/APIOps-Staging-Argo-CD.png)
 
-Tyk:
+## Configure Tyk, Tyk Operator, go-httbin demo API and all the required dependency
 
 ```
 kubectl apply -f ./staging/argocd/application-go-httpbin.yaml
@@ -83,7 +91,7 @@ kubectl port-forward svc/gateway-svc-tyk-gateway-application -n tyk 8080:8080
 * Tyk health endpoint: http://localhost:8080/hello
 * go-httpbin: http://localhost:8080/httpbin/
 
-#### Configure OpenTelemetry Collector and Jaeger
+### Configure OpenTelemetry Collector and Jaeger
 
 ```
 kubectl apply -f ./staging/argocd/application-opentelemetry-collector.yaml
@@ -100,7 +108,7 @@ kubectl port-forward svc/jaeger-all-in-one-query -n observability 16686:16686
 * Make a couple of calls to: http://localhost:8080/httpbin/get
 * Look at the distributed traces in Jaeger: http://localhost:16686
 
-#### Configure Tracetest
+### Configure Tracetest
 
 ```
 kubectl apply -f ./staging/argocd/application-tracetest.yaml
@@ -138,7 +146,7 @@ spec:
 
 ![Tracetest test](https://res.cloudinary.com/djwdcmwdz/image/upload/v1705323131/Conferences/fosdem2024/localhost_11633_test_btVZdD5IR_run_3_trace_kvtzuq.png)
 
-#### Configure an ArgoCD resource hook (needs a workaround)
+### Configure an ArgoCD resource hook (needs a workaround)
 
 [Hooks](https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/) are simply Kubernetes manifests tracked in the source repository of your Argo CD Application annotated with `argocd.argoproj.io/hook`.
 
