@@ -58,28 +58,10 @@ argocd admin initial-password -n argocd
 After following the steps below, this is how your ArgoCD instance should look like on the staging cluster: 
 ![ArgoCD in staging](./images/APIOps-Staging-Argo-CD.png)
 
-## Configure Tyk, Tyk Operator, go-httbin demo API and all the required dependency
+## Deploy APIs and API infrastructure (Tyk, Redis)
 
 ```
-kubectl apply -f ./staging/argocd/application-go-httpbin.yaml
-kubectl apply -f ./staging/argocd/application-redis.yaml
-kubectl apply -f ./staging/argocd/application-tyk-gateway-conf.yaml
-kubectl apply -f ./staging/argocd/application-tyk-gateway.yaml
-kubectl apply -f ./staging/argocd/application-cert-manager.yaml
-```
-
-```
-kubectl create secret -n tyk generic tyk-operator-conf \
-  --from-literal "TYK_AUTH=BananaSplit42" \
-  --from-literal "TYK_ORG=org" \
-  --from-literal "TYK_MODE=ce" \
-  --from-literal "TYK_URL=http://gateway-svc-tyk-gateway-application.tyk.svc.cluster.local:8080" \
-  --from-literal "TYK_TLS_INSECURE_SKIP_VERIFY=true"
-```
-
-```
-kubectl apply -f ./staging/argocd/application-tyk-operator.yaml
-kubectl apply -f ./staging/argocd/application-api-definitions.yaml
+kubectl apply -f ./staging/argocd/application-apis.yaml
 ```
 
 Try it out:
@@ -91,12 +73,10 @@ kubectl port-forward svc/gateway-svc-tyk-gateway-application -n tyk 8080:8080
 * Tyk health endpoint: http://localhost:8080/hello
 * go-httpbin: http://localhost:8080/httpbin/
 
-### Configure OpenTelemetry Collector and Jaeger
+### Deploy Observability stack (OpenTelemetry Collector, Jaeger, Tracetest)
 
 ```
-kubectl apply -f ./staging/argocd/application-opentelemetry-collector.yaml
-kubectl apply -f ./staging/argocd/application-jaeger-operator.yaml
-kubectl apply -f ./staging/argocd/application-jaeger-all-in-one.yaml
+kubectl apply -f ./staging/argocd/application-opentelemetry.yaml
 ```
 
 Try it out:
@@ -108,17 +88,15 @@ kubectl port-forward svc/jaeger-all-in-one-query -n observability 16686:16686
 * Make a couple of calls to: http://localhost:8080/httpbin/get
 * Look at the distributed traces in Jaeger: http://localhost:16686
 
-### Configure Tracetest
-
-```
-kubectl apply -f ./staging/argocd/application-tracetest.yaml
-```
+### Testing with Tracetest
 
 Try it out:
 
 ```
 kubectl port-forward svc/tracetest -n tracetest 11633:11633
 ```
+
+#### Manually
 
 Run a test manually:
 
@@ -146,13 +124,13 @@ spec:
 
 ![Tracetest test](https://res.cloudinary.com/djwdcmwdz/image/upload/v1705323131/Conferences/fosdem2024/localhost_11633_test_btVZdD5IR_run_3_trace_kvtzuq.png)
 
-### Integration testing with Tracetest
+#### Automated
 
 [Hooks](https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/) are simply Kubernetes manifests tracked in the source repository of your Argo CD Application annotated with `argocd.argoproj.io/hook`.
 
 The hook is part of the api-definitions projects, stored under ./staging/api-definitions/application-integration-tracetest.yaml
 
-#### To update the integration tests
+##### To update the integration tests
 
 Build the Docker image for the hook.
 
