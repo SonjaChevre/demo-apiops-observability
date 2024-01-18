@@ -13,7 +13,7 @@ spec:
   source:
     repoURL: 'https://github.com/SonjaChevre/demo-apiops-observability'
     path: staging/argocd-apis
-    targetRevision: sonja-production
+    targetRevision: HEAD
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
