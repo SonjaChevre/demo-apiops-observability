@@ -13,6 +13,10 @@ spec:
       parameters:
         - name: image.tag
           value: 6.2.13
+        - name: auth.existingSecret
+          value: tyk-redis-secret
+        - name: auth.passwordKey
+          value: redis-password
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: tyk
