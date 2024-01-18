@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: apis-parent-application
+  name: observability-parent-application
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -9,7 +9,7 @@ spec:
   destination:
     namespace: argocd
     server: https://kubernetes.default.svc
-  project: default
+  project: observability
   source:
     repoURL: 'https://github.com/SonjaChevre/demo-apiops-observability'
     path: staging/argocd-apis
