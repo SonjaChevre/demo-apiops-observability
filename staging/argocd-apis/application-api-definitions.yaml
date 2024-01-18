@@ -7,7 +7,7 @@ spec:
   destination:
     namespace: tyk
     server: https://kubernetes.default.svc
-  project: apis
+  project: default
   source:
     repoURL: 'https://github.com/SonjaChevre/demo-apiops-observability.git'
     path: staging/api-definitions

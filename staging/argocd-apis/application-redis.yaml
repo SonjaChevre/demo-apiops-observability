@@ -4,7 +4,7 @@ metadata:
   name: tyk-redis-application
   namespace: argocd
 spec:
-  project: apis
+  project: default
   source:
     repoURL: 'https://charts.bitnami.com/bitnami'
     chart: 'redis'

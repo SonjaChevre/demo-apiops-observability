@@ -4,7 +4,7 @@ metadata:
   name: go-httpbin-application
   namespace: argocd
 spec:
-  project: apis
+  project: default
 
   source:
     repoURL: https://github.com/SonjaChevre/demo-apiops-observability.git
