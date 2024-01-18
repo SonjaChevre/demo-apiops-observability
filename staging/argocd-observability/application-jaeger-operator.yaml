@@ -4,7 +4,7 @@ metadata:
   name: jaeger-operator
   namespace: argocd
 spec:
-  project: observability
+  project: default
   source:
     repoURL: 'https://jaegertracing.github.io/helm-charts'
     targetRevision: 2.49.0
