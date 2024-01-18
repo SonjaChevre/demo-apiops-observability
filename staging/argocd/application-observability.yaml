@@ -1,18 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: opentelemetry-collector
+  name: observability-parent-application
   namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
 spec:
+  destination:
+    namespace: observability
+    server: https://kubernetes.default.svc
   project: default
   source:
     repoURL: 'https://github.com/SonjaChevre/demo-apiops-observability'
-    path: staging/opentelemetry-collector
-    targetRevision: HEAD
-  destination:
-    server: 'https://kubernetes.default.svc'
-    namespace: observability
-
+    path: staging/argocd-observability
+    targetRevision: sonja-production
   syncPolicy:
     syncOptions:
     - CreateNamespace=true

@@ -1,18 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: jaeger-all-in-one
+  name: apis-parent-application
   namespace: argocd
+  finalizers:
+  - resources-finalizer.argocd.argoproj.io
 spec:
+  destination:
+    namespace: tyk
+    server: https://kubernetes.default.svc
   project: default
   source:
     repoURL: 'https://github.com/SonjaChevre/demo-apiops-observability'
-    path: staging/jaeger
-    targetRevision: HEAD
-  destination:
-    server: 'https://kubernetes.default.svc'
-    namespace: observability
-
+    path: staging/argocd-apis
+    targetRevision: sonja-production
   syncPolicy:
     syncOptions:
     - CreateNamespace=true

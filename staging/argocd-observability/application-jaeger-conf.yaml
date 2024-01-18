@@ -1,17 +1,17 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: jaeger-operator
+  name: jaeger-all-in-one
   namespace: argocd
 spec:
+  destination:
+    namespace: observability
+    server: https://kubernetes.default.svc
   project: default
   source:
-    repoURL: 'https://jaegertracing.github.io/helm-charts'
-    targetRevision: 2.49.0
-    chart: jaeger-operator
-  destination:
-    server: 'https://kubernetes.default.svc'
-    namespace: observability
+    repoURL: 'https://github.com/SonjaChevre/demo-apiops-observability.git'
+    path: staging/jaeger-configuration
+    targetRevision: HEAD
   syncPolicy:
     syncOptions:
     - CreateNamespace=true
