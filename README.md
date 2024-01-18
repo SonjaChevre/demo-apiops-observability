@@ -120,7 +120,7 @@ Try it out:
 kubectl port-forward svc/tracetest -n tracetest 11633:11633
 ```
 
-Run a test:
+Run a test manually:
 
 Tracetest YAML test definition
 
@@ -146,9 +146,13 @@ spec:
 
 ![Tracetest test](https://res.cloudinary.com/djwdcmwdz/image/upload/v1705323131/Conferences/fosdem2024/localhost_11633_test_btVZdD5IR_run_3_trace_kvtzuq.png)
 
-### Configure an ArgoCD resource hook (needs a workaround)
+### Integration testing with Tracetest
 
 [Hooks](https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/) are simply Kubernetes manifests tracked in the source repository of your Argo CD Application annotated with `argocd.argoproj.io/hook`.
+
+The hook is part of the api-definitions projects, stored under ./staging/api-definitions/application-integration-tracetest.yaml
+
+#### To update the integration tests
 
 Build the Docker image for the hook.
 
@@ -168,19 +172,4 @@ docker push <your_username>/demo-apiops-observability:latest
 adnanrahic/demo-apiops-observability:latest
 ```
 
-Apply the hook.
-
-```
-kubectl apply -f ./staging/argocd/application-integration-tracetest.yaml
-```
-
-<!-- #### Configure Argo Workflows
-
-```
-kubectl create namespace argo
-kubectl apply -n argo -f https://github.com/argoproj/argo-workflows/releases/download/v3.5.4/quick-start-minimal.yaml
-```
-
- -->
-
-...
+Update the hook under ./staging/api-definitions/application-integration-tracetest.yaml
