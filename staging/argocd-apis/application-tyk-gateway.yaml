@@ -13,7 +13,7 @@ spec:
       - name: global.secrets.APISecret
         value: BananaSplit42
       - name: global.redis.passSecret.name
-        value: tyk-redis-application
+        value: tyk-redis-secret
       - name: global.redis.passSecret.keyName
         value: redis-password
       - name: global.redis.addrs
