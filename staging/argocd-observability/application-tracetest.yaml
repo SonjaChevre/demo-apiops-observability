@@ -4,7 +4,7 @@ metadata:
   name: tracetest
   namespace: argocd
 spec:
-  project: default
+  project: observability
   source:
     repoURL: 'https://kubeshop.github.io/helm-charts/'
     chart: 'tracetest'

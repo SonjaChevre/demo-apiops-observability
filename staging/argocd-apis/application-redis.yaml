@@ -4,7 +4,7 @@ metadata:
   name: tyk-redis-application
   namespace: argocd
 spec:
-  project: default
+  project: apis
   source:
     repoURL: 'https://charts.bitnami.com/bitnami'
     chart: 'redis'
@@ -13,7 +13,6 @@ spec:
       parameters:
         - name: image.tag
           value: 6.2.13
-    chart: redis
   destination:
     server: 'https://kubernetes.default.svc'
     namespace: tyk

@@ -4,7 +4,7 @@ metadata:
   name: tyk-gateway-application
   namespace: argocd
 spec:
-  project: default
+  project: apis
   source:
     repoURL: 'https://helm.tyk.io/public/helm/charts/'
     targetRevision: 1.2.0

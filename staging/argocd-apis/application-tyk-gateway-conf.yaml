@@ -7,7 +7,7 @@ spec:
   destination:
     namespace: tyk
     server: https://kubernetes.default.svc
-  project: default
+  project: apis
   source:
     repoURL: 'https://github.com/SonjaChevre/demo-apiops-observability.git'
     path: staging/tyk-gateway-conf
