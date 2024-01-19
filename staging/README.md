@@ -98,10 +98,7 @@ spec:
 
 ### Running automated integration tests with Tracetest
 
-
-[Hooks](https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/) are simply Kubernetes manifests tracked in the source repository of your Argo CD Application annotated with `argocd.argoproj.io/hook`.
-
-The hook is part of the api-definitions projects, stored under ./staging/api-definitions/application-integration-tracetest.yaml
+The integration tests (configured with a [hook](https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/) under [.//application-integration-tracetest.yaml](./application-integration-tracetest.yaml) will run after every deployment changes. 
 
 ##### To update the integration tests
 
@@ -124,4 +121,4 @@ docker push <your_username>/demo-apiops-observability:latest
 adnanrahic/demo-apiops-observability:latest
 ```
 
-Update the hook under [./staging/application-integration-tracetest.yaml](./staging/application-integration-tracetest.yaml)
+Update the hook under [.//application-integration-tracetest.yaml](./application-integration-tracetest.yaml)
