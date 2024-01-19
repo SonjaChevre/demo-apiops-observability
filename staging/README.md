@@ -98,7 +98,7 @@ spec:
 
 ### Running automated integration tests with Tracetest
 
-The integration tests (configured with a [hook](https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/) under [.//application-integration-tracetest.yaml](./application-integration-tracetest.yaml) will run after every deployment changes. 
+The integration tests (configured with a [hook](https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/) under [.//application-integration-tracetest.yaml](./application-integration-tracetest.yaml) will run after every deployment changes.
 
 ##### To update the integration tests
 
