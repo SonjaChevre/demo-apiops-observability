@@ -38,7 +38,7 @@ kubectl apply -f ./staging/argocd/application-observability.yaml
 ```
 
 After following the steps below, this is how your ArgoCD instance should look like on the staging cluster (wait for all applications to be synchronized): 
-![ArgoCD in staging](./images/APIOps-Staging-Argo-CD.png)
+![ArgoCD in staging](./../images/APIOps-Staging-Argo-CD.png)
 
 ## Try it out
 
