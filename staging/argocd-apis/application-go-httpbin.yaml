@@ -9,7 +9,7 @@ spec:
   source:
     repoURL: https://github.com/SonjaChevre/demo-apiops-observability.git
     targetRevision: HEAD
-    path: staging
+    path: staging/httpbin
   destination: 
     server: https://kubernetes.default.svc
     namespace: go-httpbin
