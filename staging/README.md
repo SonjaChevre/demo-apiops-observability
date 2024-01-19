@@ -121,4 +121,4 @@ docker push <your_username>/demo-apiops-observability:latest
 adnanrahic/demo-apiops-observability:latest
 ```
 
-Update the hook under [.//application-integration-tracetest.yaml](./application-integration-tracetest.yaml)
+Update the hook under [./hook-integration-tracetest.yaml](./hook-integration-tracetest.yaml)
