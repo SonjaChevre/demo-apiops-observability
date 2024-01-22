@@ -12,7 +12,7 @@ spec:
   project: default
   source:
     repoURL: 'https://github.com/SonjaChevre/demo-apiops-observability'
-    path: staging/argocd-observability
+    path: production/argocd-observability
     targetRevision: HEAD
   syncPolicy:
     syncOptions:

@@ -2,7 +2,7 @@
 
 This is a demo project for the talk "Deploy Fast, Without Breaking Things: Level Up APIOps With OpenTelemetry" from [Sonja Chevre](https://www.linkedin.com/in/sonjachevre/) and [Adnan Rahić](https://www.linkedin.com/in/adnanrahic/).
 
-This demo started as a fork from https://github.com/caroltyk/tyk-cicd-demo2. Thanks Carol for the inspiration!
+This demo started as a fork from https://github.com/caroltyk/tyk-cicd-demo2. Thanks Carol for the inspiration! This demo is not configured for running in a real production environment but just to explore what could be possible. 
 
 Follow along to deploy 2 environments with ArgoCD, Tyk, OpenTelemetry, Jaeger and Tracetest. 
 

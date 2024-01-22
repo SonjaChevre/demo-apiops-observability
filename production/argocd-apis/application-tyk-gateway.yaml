@@ -1,0 +1,62 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: tyk-gateway-application
+  namespace: argocd
+spec:
+  project: default
+  source:
+    repoURL: 'https://helm.tyk.io/public/helm/charts/'
+    targetRevision: 1.2.0
+    helm:
+      parameters:
+      - name: global.secrets.APISecret
+        value: BananaSplit42
+      - name: global.redis.passSecret.name
+        value: tyk-redis-secret
+      - name: global.redis.passSecret.keyName
+        value: redis-password
+      - name: global.redis.addrs
+        value: 'tyk-redis-application-master.tyk.svc:6379'
+      - name: tyk-gateway.gateway.opentelemetry.enabled
+        value: 'true'
+      - name: tyk-gateway.gateway.opentelemetry.endpoint
+        value: 'opentelemetry-collector.observability.svc:4317'
+      - name: tyk-gateway.gateway.opentelemetry.exporter
+        value: 'grpc'
+      - name: 'tyk-gateway.gateway.extraVolumes[0].name'
+        value: 'tyk-app-storage'
+      - name: 'tyk-gateway.gateway.extraVolumes[0].persistentVolumeClaim.claimName'
+        value: 'tyk-app-claim'
+      - name: 'tyk-gateway.gateway.extraVolumes[1].name'
+        value: 'tyk-policies-storage'
+      - name: 'tyk-gateway.gateway.extraVolumes[1].persistentVolumeClaim.claimName'
+        value: 'tyk-policies-claim'
+      - name: 'tyk-gateway.gateway.extraVolumes[2].name'
+        value: 'tyk-middleware-storage'
+      - name: 'tyk-gateway.gateway.extraVolumes[2].persistentVolumeClaim.claimName'
+        value: 'tyk-middleware-claim'
+      - name: 'tyk-gateway.gateway.extraVolumeMounts[0].name'
+        value: 'tyk-app-storage'
+      - name: 'tyk-gateway.gateway.extraVolumeMounts[0].mountPath'
+        value: '/mnt/tyk-gateway/apps'
+      - name: 'tyk-gateway.gateway.extraVolumeMounts[1].name'
+        value: 'tyk-policies-storage'
+      - name: 'tyk-gateway.gateway.extraVolumeMounts[1].mountPath'
+        value: '/mnt/tyk-gateway/policies'
+      - name: 'tyk-gateway.gateway.extraVolumeMounts[2].name'
+        value: 'tyk-middleware-storage'
+      - name:  'tyk-gateway.gateway.extraVolumeMounts[2].mountPath'
+        value: '/mnt/tyk-gateway/middleware'
+    chart: tyk-oss
+  destination:
+    server: 'https://kubernetes.default.svc'
+    namespace: tyk
+
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
+
+    automated:
+      selfHeal: true
+      prune: true
