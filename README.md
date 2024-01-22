@@ -29,3 +29,7 @@ kubectx production
 ## Deploy staging
 
 Follow the steps from [./staging/README.md](./staging/README.md)
+
+## Deploy production
+
+Follow the steps from [./staging/README.md](./production/README.md)
