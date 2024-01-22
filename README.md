@@ -32,4 +32,4 @@ Follow the steps from [./staging/README.md](./staging/README.md)
 
 ## Deploy production
 
-Follow the steps from [./staging/README.md](./production/README.md)
+Follow the steps from [./production/README.md](./production/README.md)
