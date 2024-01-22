@@ -61,8 +61,9 @@ Forward the port 16686:
 kubectl port-forward svc/jaeger-all-in-one-query -n observability 16686:16686
 ```
 
+* Jaeger: http://localhost:16686
 
-### Testing manually with Tracetest
+### Testing with Tracetest
 
 Forward the port: 11633
 
@@ -70,7 +71,9 @@ Forward the port: 11633
 kubectl port-forward svc/tracetest -n tracetest 11633:11633
 ```
 
-Run a test manually:
+* Tracetest: http://localhost:11633
+
+#### Run a test manually:
 
 Tracetest YAML test definition
 
@@ -96,11 +99,11 @@ spec:
 
 ![Tracetest test](https://res.cloudinary.com/djwdcmwdz/image/upload/v1705323131/Conferences/fosdem2024/localhost_11633_test_btVZdD5IR_run_3_trace_kvtzuq.png)
 
-### Running automated integration tests with Tracetest
+#### Running automated integration tests
 
 The integration tests (configured with a [hook](https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/) under [.//application-integration-tracetest.yaml](./application-integration-tracetest.yaml) will run after every deployment changes.
 
-##### To update the integration tests
+#### Update the integration tests
 
 Build the Docker image for the hook.
 

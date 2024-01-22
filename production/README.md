@@ -33,12 +33,12 @@ argocd admin initial-password -n argocd
 ## Create ArgoCD applications
 
 ```
-kubectl apply -f ./staging/argocd/application-apis.yaml
-kubectl apply -f ./staging/argocd/application-observability.yaml
+kubectl apply -f ./production/argocd/application-apis.yaml
+kubectl apply -f ./production/argocd/application-observability.yaml
 ```
 
 After following the steps below, this is how your ArgoCD instance should look like on the staging cluster (wait for all applications to be synchronized): 
-![ArgoCD in staging](./../images/APIOps-Staging-Argo-CD.png)
+![ArgoCD in production](./../images/APIOps-Production-Argo-CD.png)
 
 ## Try it out
 
@@ -60,3 +60,5 @@ Forward the port 16687:
 ```
 kubectl port-forward svc/jaeger-all-in-one-query -n observability 16687:16686
 ```
+
+* Jaeger: http://localhost:16687
