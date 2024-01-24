@@ -1,0 +1,19 @@
+apiVersion: tyk.tyk.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: httpbin
+spec:
+  name: Rate Limit, Quota and Throttling policy
+  state: active
+  active: true
+  access_rights_array:
+    - name: httpbin
+      namespace: tyk
+      versions:
+        - Default
+  quota_max: 10
+  quota_renewal_rate: 60
+  rate: 5
+  per: 5
+  throttle_interval: 2
+  throttle_retry_limit: 2
