@@ -1,7 +1,7 @@
 apiVersion: tyk.tyk.io/v1alpha1
 kind: SecurityPolicy
 metadata:
-  name: httpbin_security_policy
+  name: httpbin-security-policy
 spec:
   name: Rate Limit
   state: active
