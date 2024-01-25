@@ -42,3 +42,6 @@ spec:
   active: true
   name: jwt-policy
   state: active
+
+
+  ## curl http://localhost:8080/httpbin/get -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjE3MTYyMzkwMjQsInBvbCI6Imp3dC1wb2xpY3kifQ.mw3BHbhHU-UmwVHhHJbU8pNBrrZn0zENdMewI2D4dK0"
