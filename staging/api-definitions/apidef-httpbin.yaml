@@ -24,4 +24,21 @@ spec:
   jwt_source: "tyk123" # Your HMAC secret
   jwt_identity_base_field: sub
   jwt_policy_field_name: pol
-  jwt_default_policies: ["default"] # Replace with your policy ID
+  jwt_default_policies: ["jwt-policy"] # Replace with your policy ID
+
+
+---
+
+apiVersion: tyk.tyk.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: jwt-policy
+spec:
+  access_rights_array:
+    - name: httpbin
+      namespace: default
+      versions:
+        - Default
+  active: true
+  name: jwt-policy
+  state: active
