@@ -10,6 +10,7 @@ spec:
   protocol: http
   active: true
   use_keyless: false
+  detailed_tracing: true
   auth:
     auth_header_name: Authorization
   proxy:
