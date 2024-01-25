@@ -1,7 +1,7 @@
 apiVersion: tyk.tyk.io/v1alpha1
 kind: SecurityPolicy
 metadata:
-  name: jwt-policy
+  name: basic-auth-policy
 spec:
   access_rights_array:
     - name: httpbin
@@ -11,3 +11,5 @@ spec:
   active: true
   name: jwt-policy
   state: active
+  basic_auth_data": 
+    - "password": "mickey-mouse"
