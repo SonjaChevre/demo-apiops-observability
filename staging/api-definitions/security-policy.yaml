@@ -1,0 +1,13 @@
+apiVersion: tyk.tyk.io/v1alpha1
+kind: SecurityPolicy
+metadata:
+  name: jwt-policy
+spec:
+  access_rights_array:
+    - name: httpbin
+      namespace: default
+      versions:
+        - Default
+  active: true
+  name: jwt-policy
+  state: active
