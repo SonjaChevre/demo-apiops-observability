@@ -16,76 +16,80 @@ spec:
     enabled: true
     execution_mode: proxyOnly
     schema: |
-      type Continent {
-      
-      code: ID!
-      countries: [Country!]!
-      name: String!
+      directive @cacheControl(maxAge: Int, scope: CacheControlScope) on FIELD_DEFINITION | OBJECT | INTERFACE
+
+      enum CacheControlScope {
+        PUBLIC
+        PRIVATE
       }
-      input ContinentFilterInput {
-      code: StringQueryOperatorInput}
-      type Country {
-        awsRegion: String!
-        capital: String
+
+      type Continent {
         code: ID!
-        continent: Continent!
-        currencies: [String!]!
-        currency: String
-        emoji: String!
-        emojiU: String!
-        languages: [Language!]!
-        name(lang: String): String!
+        name: String!
+        countries: [Country!]!
+      }
+
+      input ContinentFilterInput {
+        code: StringQueryOperatorInput
+      }
+
+      type Country {
+        code: ID!
+        name: String!
         native: String!
         phone: String!
-        phones: [String!]!
+        continent: Continent!
+        capital: String
+        currency: String
+        languages: [Language!]!
+        emoji: String!
+        emojiU: String!
         states: [State!]!
-        subdivisions: [Subdivision!]!}
-        
-        input CountryFilterInput {
+      }
+
+      input CountryFilterInput {
         code: StringQueryOperatorInput
-        continent: StringQueryOperatorInput
         currency: StringQueryOperatorInput
-        name: StringQueryOperatorInput
-        }
-        
-        type Language {
+        continent: StringQueryOperatorInput
+      }
+
+      type Language {
         code: ID!
-        name: String!
-        native: String!
+        name: String
+        native: String
         rtl: Boolean!
-        }
-        
-        input LanguageFilterInput {
-        code: StringQueryOperatorInput}
-        
-        type Query {
+      }
+
+      input LanguageFilterInput {
+        code: StringQueryOperatorInput
+      }
+
+      type Query {
+        continents(filter: ContinentFilterInput): [Continent!]!
         continent(code: ID!): Continent
-        continents(filter: ContinentFilterInput = {}): [Continent!]!
-        countries(filter: CountryFilterInput = {}): [Country!]!
+        countries(filter: CountryFilterInput): [Country!]!
         country(code: ID!): Country
+        languages(filter: LanguageFilterInput): [Language!]!
         language(code: ID!): Language
-        languages(filter: LanguageFilterInput = {}): [Language!]!
-        }
-        
-        type State {
+      }
+
+      type State {
         code: String
+        name: String!
         country: Country!
-        name: String!
-        }
-        
-        input StringQueryOperatorInput {
+      }
+
+      input StringQueryOperatorInput {
         eq: String
-        in: [String!]
         ne: String
-        nin: [String!]
+        in: [String]
+        nin: [String]
         regex: String
-        }
-        
-        type Subdivision {
-        code: ID!
-        emoji: String
-        name: String!
-        }
+        glob: String
+      }
+
+      """The `Upload` scalar type represents a file upload."""
+      scalar Upload
     playground:
       enabled: true
       path: /playground
