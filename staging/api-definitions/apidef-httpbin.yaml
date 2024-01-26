@@ -6,41 +6,11 @@ metadata:
   name: httpbin
 spec:
   name: httpbin
-  enable_jwt: true
   protocol: http
   active: true
-  use_keyless: false
+  use_keyless: true
   detailed_tracing: true
-  auth:
-    auth_header_name: Authorization
   proxy:
     target_url: http://go-httpbin-service.go-httpbin.svc.cluster.local
     listen_path: /httpbin
     strip_listen_path: true
-  strip_auth_data: true
-  jwt_signing_method: hmac
-  jwt_source: "tyk123" # Your HMAC secret
-  jwt_identity_base_field: sub
-  jwt_policy_field_name: pol
-  jwt_default_policies: ["jwt-policy"] # Replace with your policy ID
-
-
----
-
-apiVersion: tyk.tyk.io/v1alpha1
-kind: SecurityPolicy
-metadata:
-  name: jwt-policy
-spec:
-  access_rights_array:
-    - name: httpbin
-      namespace: default
-      versions:
-        - Default
-  active: true
-  name: jwt-policy
-  state: active
-
-
-  ## curl http://localhost:8080/httpbin/get -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjE3MTYyMzkwMjQsInBvbCI6Imp3dC1wb2xpY3kifQ.mw3BHbhHU-UmwVHhHJbU8pNBrrZn0zENdMewI2D4dK0"
-  ## curl http://localhost:8080/httpbin/delay/3 -H "Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzdWIiOiIxMjM0NTY3ODkwIiwibmFtZSI6IkpvaG4gRG9lIiwiaWF0IjoxNTE2MjM5MDIyLCJleHAiOjE3MTYyMzkwMjQsInBvbCI6Imp3dC1wb2xpY3kifQ.mw3BHbhHU-UmwVHhHJbU8pNBrrZn0zENdMewI2D4dK0"
