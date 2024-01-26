@@ -4,7 +4,7 @@ metadata:
   name: trevorblades
 spec:
   name: trevorblades
-  use_keyless: false
+  use_keyless: true
   protocol: http
   active: true
   proxy:
