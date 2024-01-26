@@ -17,9 +17,7 @@ spec:
     target_url: http://go-httpbin-service.go-httpbin.svc.cluster.local
     listen_path: /httpbin
     strip_listen_path: true
-
   strip_auth_data: true
-
   jwt_signing_method: hmac
   jwt_source: "tyk123" # Your HMAC secret
   jwt_identity_base_field: sub
