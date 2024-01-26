@@ -16,7 +16,76 @@ spec:
     enabled: true
     execution_mode: proxyOnly
     schema: |
-      type Continent {\n  code: ID!\n  countries: [Country!]!\n  name: String!\n}\n\ninput ContinentFilterInput {\n  code: StringQueryOperatorInput\n}\n\ntype Country {\n  awsRegion: String!\n  capital: String\n  code: ID!\n  continent: Continent!\n  currencies: [String!]!\n  currency: String\n  emoji: String!\n  emojiU: String!\n  languages: [Language!]!\n  name(lang: String): String!\n  native: String!\n  phone: String!\n  phones: [String!]!\n  states: [State!]!\n  subdivisions: [Subdivision!]!\n}\n\ninput CountryFilterInput {\n  code: StringQueryOperatorInput\n  continent: StringQueryOperatorInput\n  currency: StringQueryOperatorInput\n  name: StringQueryOperatorInput\n}\n\ntype Language {\n  code: ID!\n  name: String!\n  native: String!\n  rtl: Boolean!\n}\n\ninput LanguageFilterInput {\n  code: StringQueryOperatorInput\n}\n\ntype Query {\n  continent(code: ID!): Continent\n  continents(filter: ContinentFilterInput = {}): [Continent!]!\n  countries(filter: CountryFilterInput = {}): [Country!]!\n  country(code: ID!): Country\n  language(code: ID!): Language\n  languages(filter: LanguageFilterInput = {}): [Language!]!\n}\n\ntype State {\n  code: String\n  country: Country!\n  name: String!\n}\n\ninput StringQueryOperatorInput {\n  eq: String\n  in: [String!]\n  ne: String\n  nin: [String!]\n  regex: String\n}\n\ntype Subdivision {\n  code: ID!\n  emoji: String\n  name: String!\n}
+      type Continent {
+      
+      code: ID!
+      countries: [Country!]!
+      name: String!
+      }
+      input ContinentFilterInput {
+      code: StringQueryOperatorInput}
+      type Country {
+        awsRegion: String!
+        capital: String
+        code: ID!
+        continent: Continent!
+        currencies: [String!]!
+        currency: String
+        emoji: String!
+        emojiU: String!
+        languages: [Language!]!
+        name(lang: String): String!
+        native: String!
+        phone: String!
+        phones: [String!]!
+        states: [State!]!
+        subdivisions: [Subdivision!]!}
+        
+        input CountryFilterInput {
+        code: StringQueryOperatorInput
+        continent: StringQueryOperatorInput
+        currency: StringQueryOperatorInput
+        name: StringQueryOperatorInput
+        }
+        
+        type Language {
+        code: ID!
+        name: String!
+        native: String!
+        rtl: Boolean!
+        }
+        
+        input LanguageFilterInput {
+        code: StringQueryOperatorInput}
+        
+        type Query {
+        continent(code: ID!): Continent
+        continents(filter: ContinentFilterInput = {}): [Continent!]!
+        countries(filter: CountryFilterInput = {}): [Country!]!
+        country(code: ID!): Country
+        language(code: ID!): Language
+        languages(filter: LanguageFilterInput = {}): [Language!]!
+        }
+        
+        type State {
+        code: String
+        country: Country!
+        name: String!
+        }
+        
+        input StringQueryOperatorInput {
+        eq: String
+        in: [String!]
+        ne: String
+        nin: [String!]
+        regex: String
+        }
+        
+        type Subdivision {
+        code: ID!
+        emoji: String
+        name: String!
+        }
     playground:
       enabled: true
       path: /playground
