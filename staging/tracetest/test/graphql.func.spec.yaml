@@ -1,0 +1,13 @@
+type: Test
+spec:
+  id: 2jKmB7pIR
+  name: Test GraphQL
+  trigger:
+    type: http
+    httpRequest:
+      method: POST
+      url: http://gateway-svc-tyk-gateway-application.tyk.svc.cluster.local:8080/trevorblades
+      body: "{\n  \"query\": \"{ country { name } }\"\n}"
+      headers:
+      - key: Content-Type
+        value: application/json

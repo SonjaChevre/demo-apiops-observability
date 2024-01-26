@@ -77,6 +77,8 @@ kubectl port-forward svc/tracetest -n tracetest 11633:11633
 
 Tracetest YAML test definition
 
+`httpbin` - HTTP API
+
 ```yaml
 type: Test
 spec:
@@ -95,13 +97,35 @@ spec:
     name: "All HTTP Spans: Status code is 200"
     assertions:
     - attr:http.status_code = 200
+  - selector: span[tracetest.span.type="http" name="HTTP GET" http.method="GET"]
+    name: Validate API performance is below 200ms
+    assertions:
+    - attr:tracetest.span.duration  <  200ms
+```
+
+`trevorblades` - GraphQL API
+
+```yaml
+type: Test
+spec:
+  id: 2jKmB7pIR
+  name: Test GraphQL
+  trigger:
+    type: http
+    httpRequest:
+      method: POST
+      url: http://gateway-svc-tyk-gateway-application.tyk.svc.cluster.local:8080/trevorblades
+      body: "{\n  \"query\": \"{ country { name } }\"\n}"
+      headers:
+      - key: Content-Type
+        value: application/json
 ```
 
 ![Tracetest test](https://res.cloudinary.com/djwdcmwdz/image/upload/v1705323131/Conferences/fosdem2024/localhost_11633_test_btVZdD5IR_run_3_trace_kvtzuq.png)
 
 #### Running automated integration tests
 
-The integration tests (configured with a [hook](https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/) under [.//application-integration-tracetest.yaml](./application-integration-tracetest.yaml) will run after every deployment changes.
+The integration tests (configured with a [hook](https://argo-cd.readthedocs.io/en/stable/user-guide/resource_hooks/) under [./application-integration-tracetest.yaml](./application-integration-tracetest.yaml) will run after every deployment changes.
 
 #### Update the integration tests
 

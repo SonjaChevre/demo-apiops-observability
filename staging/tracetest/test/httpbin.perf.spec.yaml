@@ -1,0 +1,17 @@
+type: Test
+spec:
+  id: uvV6bnpIR
+  name: Test HTTPBin Performance
+  trigger:
+    type: http
+    httpRequest:
+      method: GET
+      url: http://gateway-svc-tyk-gateway-application.tyk.svc.cluster.local:8080/httpbin/delay/3
+      headers:
+      - key: Content-Type
+        value: application/json
+  specs:
+  - selector: span[tracetest.span.type="http"]
+    name: "All HTTP Spans: Respond faster than 200ms"
+    assertions:
+    - attr:tracetest.span.duration  <  200ms
