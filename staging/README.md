@@ -75,15 +75,15 @@ kubectl port-forward svc/tracetest -n tracetest 11633:11633
 
 #### Run a test manually:
 
-Tracetest YAML test definition
+Tracetest YAML test definitions:
 
-`httpbin` - HTTP API
+`httpbin` - Test HTTPBin Functionality
 
 ```yaml
 type: Test
 spec:
   id: nf4f055Sg
-  name: Test HTTPBin
+  name: Test HTTPBin Functionality
   trigger:
     type: http
     httpRequest:
@@ -97,13 +97,9 @@ spec:
     name: "All HTTP Spans: Status code is 200"
     assertions:
     - attr:http.status_code = 200
-  - selector: span[tracetest.span.type="http" name="HTTP GET" http.method="GET"]
-    name: Validate API performance is below 200ms
-    assertions:
-    - attr:tracetest.span.duration  <  200ms
 ```
 
-`trevorblades` - GraphQL API
+`trevorblades` - Test GraphQL
 
 ```yaml
 type: Test
@@ -119,6 +115,37 @@ spec:
       headers:
       - key: Content-Type
         value: application/json
+  specs:
+  - selector: span[tracetest.span.type="http"]
+    name: "All HTTP Spans: Status  code is 200"
+    assertions:
+    - attr:http.status_code = 200
+  - selector: span[tracetest.span.type="general" name="GraphQLMiddleware"]
+    name: "GraphQL Middleware: Validate no errors"
+    assertions:
+    - attr:otel.status_code != "ERROR"
+```
+
+`httpbin` - Test HTTPBin Performance
+
+```yaml
+type: Test
+spec:
+  id: uvV6bnpIR
+  name: Test HTTPBin Performance
+  trigger:
+    type: http
+    httpRequest:
+      method: GET
+      url: http://gateway-svc-tyk-gateway-application.tyk.svc.cluster.local:8080/httpbin/delay/3
+      headers:
+      - key: Content-Type
+        value: application/json
+  specs:
+  - selector: span[tracetest.span.type="http"]
+    name: "All HTTP Spans: Respond faster than 200ms"
+    assertions:
+    - attr:tracetest.span.duration  <  200ms
 ```
 
 ![Tracetest test](https://res.cloudinary.com/djwdcmwdz/image/upload/v1705323131/Conferences/fosdem2024/localhost_11633_test_btVZdD5IR_run_3_trace_kvtzuq.png)
