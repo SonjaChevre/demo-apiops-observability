@@ -1,0 +1,22 @@
+type: Test
+spec:
+  id: 2jKmB7pIR
+  name: Test GraphQL
+  trigger:
+    type: http
+    httpRequest:
+      method: POST
+      url: http://gateway-svc-tyk-gateway-application.tyk.svc.cluster.local:8080/trevorblades
+      body: "{\n  \"query\": \"{ country { name } }\"\n}"
+      headers:
+      - key: Content-Type
+        value: application/json
+  specs:
+  - selector: span[tracetest.span.type="http"]
+    name: "All HTTP Spans: Status  code is 200"
+    assertions:
+    - attr:http.status_code = 200
+  - selector: span[tracetest.span.type="general" name="GraphQLMiddleware"]
+    name: "GraphQL Middleware: Validate no errors"
+    assertions:
+    - attr:otel.status_code != "ERROR"

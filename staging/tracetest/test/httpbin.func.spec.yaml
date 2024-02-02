@@ -1,7 +1,7 @@
 type: Test
 spec:
   id: nf4f055Sg
-  name: Test HTTPBin
+  name: Test HTTPBin Functionality
   trigger:
     type: http
     httpRequest:
